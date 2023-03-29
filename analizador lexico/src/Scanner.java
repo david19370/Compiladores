@@ -6,8 +6,6 @@ import java.util.Map;
 public class Scanner 
 {
 
-    private final String source;
-
     private final List<Token> tokens = new ArrayList<>();
 
     private int linea = 1;
@@ -66,7 +64,6 @@ public class Scanner
     }
 
     Scanner(String source){
-        this.source = source;
     }
 
     List<Token> scanTokens()
@@ -108,28 +105,116 @@ public class Scanner
                     else if(currentChar == '-')
                     {
                         posicion++;
-                        tokens.add(new Token(TipoToken.MENOS,"+",null, linea));
+                        tokens.add(new Token(TipoToken.GUION_MEDIO,"+",null, linea));
                     }
                     else if(currentChar == '*')
                     {
                         posicion++;
-                        tokens.add(new Token(TipoToken.MULTIPLICACION,"+",null, linea));
+                        tokens.add(new Token(TipoToken.ASTERISCO,"+",null, linea));
                     }
                     else if(currentChar == '/')
                     {
                         posicion++;
-                        tokens.add(new Token(Token.Type.DIVISION,"/"));
+                        tokens.add(new Token(TipoToken.BARRA_INCLINADA,"/",null,linea));
                     }
                     else if(currentChar == '(')
                     {
                         posicion++;
-                        tokens.add(new Token(TipoToken.PARENTESIS_DERECHO,"(",null, linea);
+                        tokens.add(new Token(TipoToken.PARENTESIS_DERECHO,"(",null, linea));
                     }
                     else if(currentChar == ')')
                     {
                         posicion++;
-                        tokens.add(new Token(Token.Type.RIGHT_PARENTHESIS,")"));
+                        tokens.add(new Token(TipoToken.PARENTESIS_IZQUIERDO,")",null, linea));
                     }
+                    else if(currentChar == '{')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.LLAVE_DERECHA,"{",null, linea));
+                    }
+                    else if(currentChar == '}')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.LLAVE_IZQUIERDA,"}",null, linea));
+                    }
+                    else if(currentChar == ',')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.COMA,",",null, linea));
+                    }
+                    else if(currentChar == '.')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.PUNTO,",",null, linea));
+                    }
+                    else if(currentChar == ';')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.PUNTO_COMA,";",null, linea));
+                    }
+                    else if(currentChar == '!')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.ADMIRACION,"!",null, linea));
+                    }
+                    else if(currentChar == '!')
+                    {
+                        posicion++;
+                        if(currentChar == '=')
+                        {
+                            posicion++;
+                            tokens.add(new Token(TipoToken.OP_DIFERENTE,"!=",null, linea));
+                        }
+                    
+                    }
+                    else if(currentChar == '=')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.IGUAL_QUE,"=",null, linea));
+                    }
+                    else if(currentChar == '=')
+                    {
+                        posicion++;
+                        if(currentChar == '=')
+                        {
+                            posicion++;
+                            tokens.add(new Token(TipoToken.OP_IGUAL_QUE,"==",null, linea)); 
+                        }
+                    
+                    }
+                    else if(currentChar == '<')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.MENOR_QUE,"<",null, linea));
+                    }
+                    else if(currentChar == '<')
+                    {
+                        posicion++;
+                        if(currentChar == '=')
+                        {
+                            posicion++;
+                            tokens.add(new Token(TipoToken.OP_MENOR_IGUAL_QUE,"<=",null, linea)); 
+                        }
+                    
+                    }
+                    else if(currentChar == '>')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.MAYOR_QUE,">",null, linea));
+                    }
+                    else if(currentChar == '>')
+                    {
+                        posicion++;
+                        if(currentChar == '=')
+                        {
+                            posicion++;
+                            tokens.add(new Token(TipoToken.OP_MAYOR_IGUAL_QUE,">=",null, linea)); 
+                        }
+                    
+                    }
+                    
+
+
 
 
 
@@ -137,15 +222,15 @@ public class Scanner
 
         }
 
-
-    }
-
-
         tokens.add(new Token(TipoToken.EOF, "", null, linea));
 
         return tokens;
+    }
+
+
+        
 }
-}
+
 
 /*
 Signos o símbolos del lenguaje:

@@ -68,15 +68,7 @@ public class Scanner
 
     List<Token> scanTokens()
     {
-       
-        //Aquí va el corazón del scanner.
-
-        /*
-        Analizar el texto de entrada para extraer todos los tokens
-        y al final agregar el token de fin de archivo
-         */
-
-        List<Token> tokens = new ArrayList<>();
+         List<Token> tokens = new ArrayList<>();
          int estado, posicion = 0;
          StringBuilder lexema = new StringBuilder();
 
@@ -87,131 +79,137 @@ public class Scanner
             switch(estado)
             {
                 case 0:
-                    if(Character.isDigit(currentChar))
+                    if(currentChar == '+')
                     {
-                        estado = 1;
-                        lexema.append(currentChar);
-                    }
-                    else if(Character.isLetter(currentChar))
-                    {
-                        estado = 2;
-                        lexema.append(currentChar);
-                    }
-                    else if(currentChar == '+')
-                    {
-                        posicion++;
                         tokens.add(new Token(TipoToken.MAS,"+",null, linea));
-                        
+                        posicion++;
+                        estado = 1;
                     }
                     else if(currentChar == '-')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.GUION_MEDIO,"-",null, linea));
+                        posicion++;
+                        estado = 2;
                     }
                     else if(currentChar == '*')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.ASTERISCO,"*",null, linea));
+                        posicion++;
+                        estado = 3;
                     }
                     else if(currentChar == '/')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.BARRA_INCLINADA,"/",null,linea));
+                        posicion++;
+                        estado = 4;
                     }
                     else if(currentChar == '(')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.PARENTESIS_DERECHO,"(",null, linea));
+                        posicion++;
+                        estado = 5;
                     }
                     else if(currentChar == ')')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.PARENTESIS_IZQUIERDO,")",null, linea));
+                        posicion++;
+                        estado = 6;
                     }
                     else if(currentChar == '{')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.LLAVE_DERECHA,"{",null, linea));
+                        posicion++;
+                        estado = 7;
                     }
                     else if(currentChar == '}')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.LLAVE_IZQUIERDA,"}",null, linea));
+                        posicion++;
+                        estado = 8;
                     }
                     else if(currentChar == ',')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.COMA,",",null, linea));
+                        posicion++;
+                        estado = 9;
                     }
                     else if(currentChar == '.')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.PUNTO,",",null, linea));
+                        posicion++;
+                        estado = 10;
                     }
                     else if(currentChar == ';')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.PUNTO_COMA,";",null, linea));
+                        posicion++; 
+                        estado = 11;
                     }
                     else if(currentChar == '!')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.ADMIRACION,"!",null, linea));
+                        posicion++;
+                        estado = 12;
                     }
                     else if(currentChar == '!')
                     {
                         posicion++;
                         if(currentChar == '=')
                         {
-                            posicion++;
                             tokens.add(new Token(TipoToken.OP_DIFERENTE,"!=",null, linea));
+                            posicion++;
+                            estado = 13;
                         }
                     
                     }
                     else if(currentChar == '=')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.IGUAL_QUE,"=",null, linea));
+                        posicion++;
+                        estado = 14;
                     }
                     else if(currentChar == '=')
                     {
                         posicion++;
                         if(currentChar == '=')
                         {
-                            posicion++;
                             tokens.add(new Token(TipoToken.OP_IGUAL_QUE,"==",null, linea)); 
+                            posicion++;
+                            estado = 15;
                         }
                     
                     }
                     else if(currentChar == '<')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.MENOR_QUE,"<",null, linea));
+                        posicion++;
+                        estado = 16;
                     }
                     else if(currentChar == '<')
                     {
                         posicion++;
                         if(currentChar == '=')
                         {
-                            posicion++;
                             tokens.add(new Token(TipoToken.OP_MENOR_IGUAL_QUE,"<=",null, linea)); 
+                            posicion++;
+                            estado = 17;
                         }
                     
                     }
                     else if(currentChar == '>')
                     {
-                        posicion++;
                         tokens.add(new Token(TipoToken.MAYOR_QUE,">",null, linea));
+                        posicion++;
                     }
                     else if(currentChar == '>')
                     {
                         posicion++;
                         if(currentChar == '=')
                         {
-                            posicion++;
                             tokens.add(new Token(TipoToken.OP_MAYOR_IGUAL_QUE,">=",null, linea)); 
+                            posicion++;
+                            estado = 18;
                         }
-                    
                     }
                     
 

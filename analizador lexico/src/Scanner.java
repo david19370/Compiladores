@@ -136,45 +136,47 @@ public class Scanner
                     }
                     else if(currentChar == '!')
                     {
-                        tokens.add(new Token(TipoToken.ADMIRACION,"!",null, linea));
                         posicion++;
                         estado = 1;
                     }
+                    
                     else if(currentChar == '=')
                     {
-                        tokens.add(new Token(TipoToken.IGUAL_QUE,"=",null, linea));
                         posicion++;
                         estado=2;
                     }
                     else if(currentChar == '<')
                     {
-                        tokens.add(new Token(TipoToken.MENOR_QUE,"<",null, linea));
                         posicion++;
                         estado = 3;
                     }
 
                     else if(currentChar == '>')
                     {
-                        tokens.add(new Token(TipoToken.MAYOR_QUE,">",null, linea));
                         posicion++;
                         estado = 4;
                     }
 
                     break;   //Caso 0
 
-                    case 1:
+
+                    case 1:    //!=
 
                     if(currentChar == '=')
                     {
                         tokens.add(new Token(TipoToken.OP_DIFERENTE,"!=",null, linea));
                         posicion++;
-                        //estado
+                        estado=0;
+                    }
+                    else
+                    {
+                        tokens.add(new Token(TipoToken.ADMIRACION,"!",null, linea));
+                        estado=0;
                     }
 
                     break;   //Caso1
 
-                
-                    case 2:
+                    case 2:   //==
 
                     if(currentChar == '=')
                     {
@@ -182,30 +184,45 @@ public class Scanner
                         posicion++;
                         estado=0;
                     }
+                    else
+                    {
+                        tokens.add(new Token(TipoToken.IGUAL_QUE,"=",null, linea));
+                        posicion++;
+                        estado=0;
+                    }
 
                     break;   //Caso 2
 
-
-
-                    case 3:
+                    case 3:   //<=
 
                     if(currentChar == '=')
-                        {
-                            tokens.add(new Token(TipoToken.OP_MENOR_IGUAL_QUE,"<=",null, linea)); 
-                            posicion++;
-                            estado=0;
-                        }
-
+                    {
+                        tokens.add(new Token(TipoToken.OP_MENOR_IGUAL_QUE,"<=",null, linea)); 
+                        posicion++;
+                        estado=0;
+                    }
+                    else
+                    {
+                        tokens.add(new Token(TipoToken.MENOR_QUE,"<",null, linea));
+                        posicion++;
+                        estado=0;
+                    }
                     break;   //Caso 3
 
-                    case 4:
+                    case 4:    //>=
 
                     if(currentChar == '=')
-                        {
+                    {
                         tokens.add(new Token(TipoToken.OP_MAYOR_IGUAL_QUE,">=",null, linea)); 
                         posicion++;
                         estado=0;
-                        }    
+                    }
+                    else
+                    {
+                        tokens.add(new Token(TipoToken.MAYOR_QUE,">",null, linea));
+                        posicion++;
+                        estado=0;
+                    }    
 
                     break;      //Caso 4
 

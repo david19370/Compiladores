@@ -72,7 +72,7 @@ public class Scanner
          int estado, posicion = 0;
          StringBuilder lexema = new StringBuilder();
 
-         while(posicion < input.length())
+         while(posicion < input.length())    //falta poner el input aqui y en la funcion de abajo
          {
             char currentChar = input.charAt(posicion);
 
@@ -160,7 +160,7 @@ public class Scanner
                     break;   //Caso 0
 
 
-                    case 1:    //!=
+                    case 1:    //! y !=
 
                     if(currentChar == '=')
                     {
@@ -176,7 +176,7 @@ public class Scanner
 
                     break;   //Caso1
 
-                    case 2:   //==
+                    case 2:   //= y ==
 
                     if(currentChar == '=')
                     {
@@ -193,7 +193,7 @@ public class Scanner
 
                     break;   //Caso 2
 
-                    case 3:   //<=
+                    case 3:   //< y <=
 
                     if(currentChar == '=')
                     {
@@ -209,7 +209,7 @@ public class Scanner
                     }
                     break;   //Caso 3
 
-                    case 4:    //>=
+                    case 4:    //> y >=
 
                     if(currentChar == '=')
                     {

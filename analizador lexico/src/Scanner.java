@@ -6,7 +6,9 @@ import java.util.Map;
 public class Scanner 
 {
 
-    private final List<Token> tokens = new ArrayList<>();
+    private final String source;
+
+    //no se usa esto  ->   private final List<Token> tokens = new ArrayList<>();
 
     private int linea = 1;
 
@@ -69,12 +71,12 @@ public class Scanner
     List<Token> scanTokens()
     {
          List<Token> tokens = new ArrayList<>();
-         int estado, posicion = 0;
-         StringBuilder lexema = new StringBuilder();
-
-         while(posicion < input.length())    //falta poner el input aqui y en la funcion de abajo
+         int estado =0;
+         int posicion = 0;
+         
+         while(posicion < source.length())   
          {
-            char currentChar = input.charAt(posicion);
+            char currentChar = source.charAt(posicion);
 
             switch(estado)
             {

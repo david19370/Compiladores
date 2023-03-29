@@ -75,6 +75,7 @@ public class Scanner
         Analizar el texto de entrada para extraer todos los tokens
         y al final agregar el token de fin de archivo
          */
+
         List<Token> tokens = new ArrayList<>();
          int estado, posicion = 0;
          StringBuilder lexema = new StringBuilder();
@@ -105,12 +106,12 @@ public class Scanner
                     else if(currentChar == '-')
                     {
                         posicion++;
-                        tokens.add(new Token(TipoToken.GUION_MEDIO,"+",null, linea));
+                        tokens.add(new Token(TipoToken.GUION_MEDIO,"-",null, linea));
                     }
                     else if(currentChar == '*')
                     {
                         posicion++;
-                        tokens.add(new Token(TipoToken.ASTERISCO,"+",null, linea));
+                        tokens.add(new Token(TipoToken.ASTERISCO,"*",null, linea));
                     }
                     else if(currentChar == '/')
                     {

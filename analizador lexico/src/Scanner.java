@@ -265,7 +265,7 @@ public class Scanner
                     {
                         tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
                         posicion++;
-                        lexema.append(currentChar);
+                        lexema = new StringBuilder();
                         estado=0;
                     }
 

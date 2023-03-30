@@ -130,7 +130,7 @@ public class Scanner
                     }
                     else if(currentChar == '.')
                     {
-                        tokens.add(new Token(TipoToken.PUNTO,",",null, linea));
+                        tokens.add(new Token(TipoToken.PUNTO,".",null, linea));
                         posicion++;
                     }
                     else if(currentChar == ';')
@@ -162,9 +162,17 @@ public class Scanner
                     }
                     else if(Character.isDigit(currentChar))
                     {
-                        estado = 5;
+                        posicion++;
+
+                        tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
                         lexema.append(currentChar);
                         posicion++;
+                        estado = 5;
+                    }
+                    else if(currentChar == ' ')
+                    {
+                        posicion++;
+                        estado = 0;
                     }
 
                     break;   //Caso 0
@@ -238,6 +246,19 @@ public class Scanner
 
                     case 5:
                     if(Character.isDigit(currentChar))
+                    {
+                        lexema.append(currentChar);
+                        tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
+                        posicion++;
+                        estado=0;
+                    }
+                    else if(currentChar =='.')
+                    {
+                        tokens.add(new Token(TipoToken.PUNTO,".",null, linea));
+                        posicion++;
+                        estado = 0;
+                    }
+                    else if(Character.isDigit(currentChar))
                     {
                         lexema.append(currentChar);
                         tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));

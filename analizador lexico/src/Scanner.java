@@ -264,6 +264,12 @@ public class Scanner
                         lexema = new StringBuilder();
                         estado=0;
                     }
+                    else if(currentChar == '.')
+                    {
+                        tokens.add(new Token(TipoToken.PUNTO,".",null, linea));
+                        posicion++;
+                        estado=5;
+                    }
 
                     break; //Numeros 
 

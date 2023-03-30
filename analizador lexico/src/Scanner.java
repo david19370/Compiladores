@@ -162,11 +162,29 @@ public class Scanner
                     }
                     else if(Character.isDigit(currentChar))
                     {
-                        lexema.append(currentChar);
-                        tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
-                        posicion++;
                         estado = 5;
+                        lexema.append(currentChar);
                     }
+                    else if(Character.isLetter(currentChar))
+                    {
+                        
+                        lexema.append(currentChar);
+                        posicion++;
+                        
+                        estado = 6;
+
+                    }
+                    else if(currentChar == 'y')
+                    {
+                        tokens.add(new Token(TipoToken.Y,"y",null, linea));
+                        posicion++; 
+                    }
+                    else if(currentChar == 'o')
+                    {
+                        tokens.add(new Token(TipoToken.O,"o",null, linea));
+                        posicion++; 
+                    }
+
                     else if(currentChar == ' ')
                     {
                         posicion++;
@@ -242,29 +260,36 @@ public class Scanner
 
                     break;      //Caso 4
 
-                    case 5:
+                    case 5: //Digitos
                     if(Character.isDigit(currentChar))
                     {
-                       
                         tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
+                        posicion++;
+                        lexema.append(currentChar);
+                        estado=0;
+                    }
+
+                    break; //Numeros 
+
+                    
+                    case 6: //Cadenas
+                    if(Character.isLetter(currentChar))
+                    {
+                        
+                        lexema.append(currentChar);
+                        tokens.add(new Token(TipoToken.CADENA,lexema.toString(),null, linea));
+                        
+                        posicion++;
+                        estado=0;
+                    }else{
+                        lexema.append(currentChar);
                         posicion++;
                         estado=0;
                     }
-                    else if(currentChar =='.')
-                    {
-                        tokens.add(new Token(TipoToken.PUNTO,".",null, linea));
-                        posicion++;
-                        estado = 5;
-                    }
-                    else if(Character.isDigit(currentChar))
-                    {
-                        
-                        tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
-                        posicion++;
-                        estado=5;
-                    }
                     
-                    break;
+                    break; //Case 6
+                    
+                    
 
                     
             }

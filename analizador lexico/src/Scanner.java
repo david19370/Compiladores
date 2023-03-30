@@ -167,12 +167,8 @@ public class Scanner
                     }
                     else if(Character.isLetter(currentChar))
                     {
-                        
-                        lexema.append(currentChar);
-                        posicion++;
-                        
                         estado = 6;
-
+                        lexema.append(currentChar);
                     }
                     else if(currentChar == 'y')
                     {
@@ -275,15 +271,9 @@ public class Scanner
                     case 6: //Cadenas
                     if(Character.isLetter(currentChar))
                     {
-                        
-                        lexema.append(currentChar);
                         tokens.add(new Token(TipoToken.CADENA,lexema.toString(),null, linea));
-                        
                         posicion++;
-                        estado=0;
-                    }else{
-                        lexema.append(currentChar);
-                        posicion++;
+                        lexema = new StringBuilder();
                         estado=0;
                     }
                     

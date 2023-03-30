@@ -162,10 +162,8 @@ public class Scanner
                     }
                     else if(Character.isDigit(currentChar))
                     {
-                        posicion++;
-
-                        tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
                         lexema.append(currentChar);
+                        tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
                         posicion++;
                         estado = 5;
                     }
@@ -247,7 +245,7 @@ public class Scanner
                     case 5:
                     if(Character.isDigit(currentChar))
                     {
-                        lexema.append(currentChar);
+                       
                         tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
                         posicion++;
                         estado=0;
@@ -256,14 +254,14 @@ public class Scanner
                     {
                         tokens.add(new Token(TipoToken.PUNTO,".",null, linea));
                         posicion++;
-                        estado = 0;
+                        estado = 5;
                     }
                     else if(Character.isDigit(currentChar))
                     {
-                        lexema.append(currentChar);
+                        
                         tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
                         posicion++;
-                        estado=0;
+                        estado=5;
                     }
                     
                     break;

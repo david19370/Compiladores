@@ -130,7 +130,7 @@ public class Scanner
                     }
                     else if(currentChar == '.')
                     {
-                        tokens.add(new Token(TipoToken.PUNTO,".",null, linea));
+                        tokens.add(new Token(TipoToken.PUNTO,",",null, linea));
                         posicion++;
                     }
                     else if(currentChar == ';')
@@ -244,32 +244,22 @@ public class Scanner
                         posicion++;
                         estado=0;
                     }
-                    else if(currentChar == '.')
-                    {
-                        tokens.add(new Token(TipoToken.PUNTO,".",null, linea));
-                        posicion++;
-                        estado=0;
-                    }
-                        
-                }
                     
                     break;
 
                     
             }
 
-            tokens.add(new Token(TipoToken.EOF, "", null, linea));
+        }
+
+        tokens.add(new Token(TipoToken.EOF, "", null, linea));
 
         return tokens;
+    }
 
-        }
 
         
 }
-
-
-        
-
 
 
 /*

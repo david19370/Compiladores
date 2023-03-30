@@ -8,7 +8,7 @@ public class Scanner
 
     private final String source;
 
-    //no se usa esto  ->   private final List<Token> tokens = new ArrayList<>();
+    private final List<Token> tokens = new ArrayList<>();
 
     private int linea = 1;
 
@@ -66,13 +66,15 @@ public class Scanner
     }
 
     Scanner(String source){
+        this.source = source;
     }
-
+    
     List<Token> scanTokens()
     {
          List<Token> tokens = new ArrayList<>();
          int estado =0;
          int posicion = 0;
+         StringBuilder lexema = new StringBuilder();
          
          while(posicion < source.length())   
          {
@@ -158,6 +160,12 @@ public class Scanner
                         posicion++;
                         estado = 4;
                     }
+                    else if(Character.isDigit(currentChar))
+                    {
+                        estado = 5;
+                        lexema.append(currentChar);
+                        posicion++;
+                    }
 
                     break;   //Caso 0
 
@@ -228,6 +236,18 @@ public class Scanner
 
                     break;      //Caso 4
 
+                    case 5:
+                    if(Character.isDigit(currentChar))
+                    {
+                        lexema.append(currentChar);
+                        tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
+                        posicion++;
+                        estado=0;
+                    }
+                    
+                    break;
+
+                    
             }
 
         }

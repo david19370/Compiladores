@@ -6,7 +6,7 @@ import java.util.Map;
 public class Scanner 
 {
 
-    private final String source;
+    private String source;
 
     private final List<Token> tokens = new ArrayList<>();
 
@@ -60,9 +60,9 @@ public class Scanner
     private static final Map<String, TipoToken> identificadorCadenaNumero;
     static {
         identificadorCadenaNumero = new HashMap<>();
-        identificadorCadenaNumero.put("REGEX_ID", TipoToken.IDENTIFICADOR);
-        identificadorCadenaNumero.put("REGEX_CADENA", TipoToken.CADENA);
-        identificadorCadenaNumero.put("REGEX_NUMERO", TipoToken.NUMERO);
+        identificadorCadenaNumero.put("Identificador", TipoToken.IDENTIFICADOR);
+        identificadorCadenaNumero.put("Cadena", TipoToken.CADENA);
+        identificadorCadenaNumero.put("Numero", TipoToken.NUMERO);
     }
 
     Scanner(String source){
@@ -71,69 +71,70 @@ public class Scanner
     
     List<Token> scanTokens()
     {
-         List<Token> tokens = new ArrayList<>();
-         int estado =0;
-         int posicion = 0;
-         StringBuilder lexema = new StringBuilder();
-         
-         while(posicion < source.length())   
-         {
+        List<Token> tokens = new ArrayList<>();
+        int estado = 0;
+        int posicion = 0;
+        String lexema = "";
+        source = source + " ";
+
+        while(posicion < source.length())   
+        {
             char currentChar = source.charAt(posicion);
 
             switch(estado)
             {
                 case 0:
-                    if(currentChar == '+')
+                    if(currentChar == '+') //Signo del lenguaje +
                     {
                         tokens.add(new Token(TipoToken.MAS,"+",null, linea));
                         posicion++;
                     }
-                    else if(currentChar == '-')
+                    else if(currentChar == '-') //Signo del lenguaje -
                     {
                         tokens.add(new Token(TipoToken.GUION_MEDIO,"-",null, linea));
                         posicion++;
                     }
-                    else if(currentChar == '*')
+                    else if(currentChar == '*') //Signo del lenguaje *
                     {
                         tokens.add(new Token(TipoToken.ASTERISCO,"*",null, linea));
                         posicion++;
                     }
-                    else if(currentChar == '/')
+                    else if(currentChar == '/') 
                     {
-                        tokens.add(new Token(TipoToken.BARRA_INCLINADA,"/",null,linea));
                         posicion++;
+                        estado = 7;
                     }
-                    else if(currentChar == '(')
+                    else if(currentChar == '(') //Signo del lenguaje (
                     {
                         tokens.add(new Token(TipoToken.PARENTESIS_DERECHO,"(",null, linea));
                         posicion++;
                     }
-                    else if(currentChar == ')')
+                    else if(currentChar == ')') //Signo del lenguaje )
                     {
                         tokens.add(new Token(TipoToken.PARENTESIS_IZQUIERDO,")",null, linea));
                         posicion++;
                     }
-                    else if(currentChar == '{')
+                    else if(currentChar == '{') //Signo del lenguaje {
                     {
                         tokens.add(new Token(TipoToken.LLAVE_DERECHA,"{",null, linea));
                         posicion++;
                     }
-                    else if(currentChar == '}')
+                    else if(currentChar == '}') //Signo del lenguaje }
                     {
                         tokens.add(new Token(TipoToken.LLAVE_IZQUIERDA,"}",null, linea));
                         posicion++;
                     }
-                    else if(currentChar == ',')
+                    else if(currentChar == ',') //Signo del lenguaje ,
                     {
                         tokens.add(new Token(TipoToken.COMA,",",null, linea));
                         posicion++;
                     }
-                    else if(currentChar == '.')
+                    else if(currentChar == '.') //Signo del lenguaje .
                     {
                         tokens.add(new Token(TipoToken.PUNTO,".",null, linea));
                         posicion++;
                     }
-                    else if(currentChar == ';')
+                    else if(currentChar == ';') //Signo del lenguaje ;
                     {
                         tokens.add(new Token(TipoToken.PUNTO_COMA,";",null, linea));
                         posicion++; 
@@ -160,134 +161,200 @@ public class Scanner
                         posicion++;
                         estado = 4;
                     }
-                    else if(Character.isDigit(currentChar))
-                    {
-                        estado = 5;
-                        lexema.append(currentChar);
-                    }
-                    else if(Character.isLetter(currentChar))
-                    {
-                        estado = 6;
-                        lexema.append(currentChar);
-                    }
-                    else if(currentChar == 'y')
+                    else if(currentChar == 'y') //Palabra reservada Y
                     {
                         tokens.add(new Token(TipoToken.Y,"y",null, linea));
                         posicion++; 
                     }
-                    else if(currentChar == 'o')
+                    else if(currentChar == 'o') //Palabra reservada O
                     {
                         tokens.add(new Token(TipoToken.O,"o",null, linea));
                         posicion++; 
                     }
-
                     else if(currentChar == ' ')
                     {
                         posicion++;
                         estado = 0;
                     }
 
+                    else if(Character.isDigit(currentChar))
+                    {
+                        lexema = lexema + currentChar;
+                        estado = 5;
+                        posicion++;
+                    }
+
+                    else if(currentChar == '"')
+                    {
+                        lexema = lexema + currentChar;
+                        posicion++;
+                        estado = 6;
+                    }
+                    
+                    else if(Character.isAlphabetic(currentChar))
+                    {
+                        lexema = lexema + currentChar;
+                        posicion++;
+                        estado = 11;
+                    }
+
                     break;   //Caso 0
 
 
-                    case 1:    //! y !=
-
-                    if(currentChar == '=')
+                case 1:    //Signos del lenguaje ! y !=
+                    if(currentChar == '=') //Signo del lenguaje !=
                     {
                         tokens.add(new Token(TipoToken.OP_DIFERENTE,"!=",null, linea));
                         posicion++;
                         estado=0;
                     }
-                    else
-                    {
+                    else                    //Signo del lenguaje !
+                    {    
                         tokens.add(new Token(TipoToken.ADMIRACION,"!",null, linea));
                         estado=0;
                     }
-
                     break;   //Caso1
 
-                    case 2:   //= y ==
-
-                    if(currentChar == '=')
+                case 2:   //Signos del lenguaje = y ==
+                    if(currentChar == '=')//Signo del lenguaje ==
                     {
                         tokens.add(new Token(TipoToken.OP_IGUAL_QUE,"==",null, linea)); 
                         posicion++;
                         estado=0;
                     }
-                    else
+                    else                   //Signo del lenguaje =
                     {
                         tokens.add(new Token(TipoToken.IGUAL_QUE,"=",null, linea));
-                        posicion++;
                         estado=0;
                     }
-
                     break;   //Caso 2
 
-                    case 3:   //< y <=
-
-                    if(currentChar == '=')
+                case 3:   //Signos del lenguaje < y <=
+                    if(currentChar == '=') //Signo del lenguaje <=
                     {
                         tokens.add(new Token(TipoToken.OP_MENOR_IGUAL_QUE,"<=",null, linea)); 
                         posicion++;
                         estado=0;
                     }
-                    else
+                    else                //Signo del lenguaje <
                     {
-                        tokens.add(new Token(TipoToken.MENOR_QUE,"<",null, linea));
-                        posicion++;
+                        tokens.add(new Token(TipoToken.MENOR_QUE,"<",null, linea));                        
                         estado=0;
                     }
                     break;   //Caso 3
 
-                    case 4:    //> y >=
-
-                    if(currentChar == '=')
+                case 4:    //Signos del lenguaje > y >=
+                    if(currentChar == '=')  //Signo del lenguaje >=
                     {
                         tokens.add(new Token(TipoToken.OP_MAYOR_IGUAL_QUE,">=",null, linea)); 
                         posicion++;
                         estado=0;
                     }
-                    else
+                    else                    //Signo del lenguaje >
                     {
                         tokens.add(new Token(TipoToken.MAYOR_QUE,">",null, linea));
-                        posicion++;
                         estado=0;
                     }    
-
                     break;      //Caso 4
 
-                    case 5: //Digitos
+                case 5: //Numeros
                     if(Character.isDigit(currentChar))
                     {
-                        tokens.add(new Token(TipoToken.NUMERO,lexema.toString(),null, linea));
-                        posicion++;
-                        lexema = new StringBuilder();
-                        estado=0;
-                    }
-                    else if(currentChar == '.')
-                    {
-                        tokens.add(new Token(TipoToken.PUNTO,".",null, linea));
+                        lexema = lexema + currentChar;
                         posicion++;
                         estado=5;
-                    }
-
-                    break; //Numeros 
-
-                    
-                    case 6: //Cadenas
-                    if(Character.isLetter(currentChar))
-                    {
-                        tokens.add(new Token(TipoToken.CADENA,lexema.toString(),null, linea));
+                    }else if(currentChar == '.'){
+                        lexema = lexema + currentChar;
                         posicion++;
-                        lexema = new StringBuilder();
+                        estado=5;
+                    }else{
+                        tokens.add(new Token(TipoToken.NUMERO,lexema,null, linea));
+                        lexema = "";
                         estado=0;
                     }
-                    
+                    break; //Numeros 
+
+                case 6: //Cadenas " "
+                    if(currentChar == '"'){
+                        lexema = lexema + currentChar;
+                        tokens.add(new Token(TipoToken.CADENA,lexema,null, linea));
+                        posicion++;
+                        lexema = "";
+                        estado = 0;
+                    }else{
+                        lexema = lexema + currentChar;
+                        posicion++;
+                        estado = 6;
+                    }
                     break; //Case 6
                     
+                case 7:
+                    if(currentChar == '/'){ 
+                        posicion++;
+                        estado = 8;
+                    }else if(currentChar == '*'){
+                        posicion++;
+                        estado = 9;
+                    }else{      //Signo del lenguaje /
+                        tokens.add(new Token(TipoToken.BARRA_INCLINADA,"/",null,linea));
+                        estado = 0;
+                    }
+                    break; //Case 7
                     
+                case 8:        //Comentarios tipo //
+                    if(currentChar != '\0'){ 
+                        posicion++;
+                        estado = 8;
+                    }else{
+                        estado = 0;
+                    }
+                    break; //Case 8
 
-                    
+                case 9:
+                    if(currentChar == '*'){ 
+                        posicion++;
+                        estado = 10;
+                    }else{
+                        posicion++;
+                        estado = 9;
+                    }
+                    break; //Case 9
+
+                case 10:       //Comentarios tipo /* */
+                    if(currentChar == '/'){ 
+                        posicion++;
+                        estado = 0;
+                    }else{
+                        posicion++;
+                        estado = 9;
+                    }
+                    break; //Case 10
+
+                case 11:       //Identificadores
+                    if(Character.isAlphabetic(currentChar) || Character.isDigit(currentChar)){ 
+                        lexema = lexema + currentChar;
+                        posicion++;
+                        estado = 11;
+                    }else{ 
+                        TipoToken tipoToken = palabrasReservadas.get(lexema);
+                        if(tipoToken == null){
+                            tokens.add(new Token(TipoToken.IDENTIFICADOR, lexema, null,linea));
+                            lexema = "";
+                            estado = 0;
+                        }
+                        else{
+                            tokens.add(new Token(tipoToken, lexema, null, linea));
+                            lexema = "";
+                            estado = 0;
+                        }
+                        estado = 0;
+                    }
+                    break; //Case 11
+
+                default:
+                    posicion++;
+                    estado = 0;
+                    break;
             }
 
         }

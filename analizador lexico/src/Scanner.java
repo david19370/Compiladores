@@ -8,6 +8,8 @@ public class Scanner
 
     private String source;
 
+    private final List<Token> tokens = new ArrayList<>();
+
     private int linea = 1;
 
     private static final Map<String, TipoToken> palabrasReservadas;
@@ -196,6 +198,12 @@ public class Scanner
                         estado = 11;
                     }
 
+                    else{
+                        lexema = lexema + currentChar;
+                        posicion++;
+                        estado = 0;
+                    }
+
                     break;   //Caso 0
 
 
@@ -348,11 +356,6 @@ public class Scanner
                         estado = 0;
                     }
                     break; //Case 11
-
-                default:
-                    posicion++;
-                    estado = 0;
-                    break;
             }
 
         }

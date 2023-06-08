@@ -8,8 +8,6 @@ public class Scanner
 
     private String source;
 
-    private final List<Token> tokens = new ArrayList<>();
-
     private int linea = 1;
 
     private static final Map<String, TipoToken> palabrasReservadas;

@@ -197,7 +197,10 @@ public class Scanner
                         posicion++;
                         estado = 11;
                     }
-
+                    else if(currentChar == '\r' || currentChar == '\n')
+                    {
+                        posicion++;
+                    }
                     else{
                         lexema = lexema + currentChar;
                         posicion++;

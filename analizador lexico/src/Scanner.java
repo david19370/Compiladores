@@ -8,8 +8,6 @@ public class Scanner
 
     private String source;
 
-    private final List<Token> tokens = new ArrayList<>();
-
     private int linea = 1;
 
     private static final Map<String, TipoToken> palabrasReservadas;
@@ -20,7 +18,7 @@ public class Scanner
         palabrasReservadas.put("ademas", TipoToken.ADEMAS);
         palabrasReservadas.put("falso", TipoToken.FALSO);
         palabrasReservadas.put("para", TipoToken.PARA);
-        palabrasReservadas.put("fun", TipoToken.FUN); //definir funciones
+        palabrasReservadas.put("fun", TipoToken.FUN); 
         palabrasReservadas.put("si", TipoToken.SI);
         palabrasReservadas.put("nulo", TipoToken.NULO);
         palabrasReservadas.put("o", TipoToken.O);
@@ -29,7 +27,7 @@ public class Scanner
         palabrasReservadas.put("super", TipoToken.SUPER);
         palabrasReservadas.put("este", TipoToken.ESTE);
         palabrasReservadas.put("verdadero", TipoToken.VERDADERO);
-        palabrasReservadas.put("var", TipoToken.VAR); //definir variables
+        palabrasReservadas.put("var", TipoToken.VAR); 
         palabrasReservadas.put("mientras", TipoToken.MIENTRAS);
     }
 

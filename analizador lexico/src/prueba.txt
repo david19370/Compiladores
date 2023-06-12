@@ -1,0 +1,54 @@
+Prueba 1:
+
+var a;      var b=0;
+
+
+Prueba 2:
+
+si(a<123){    imprimir a;  }
+// if(a<123){    print a;}
+
+
+
+Prueba 3:
+
+para(var i=0; ;){    imprimir i;    si(i>100){  retornar;    }}
+
+//  for(var i=0; ;){    print i;    if (i>100){        return;    }}
+
+
+Prueba 4:
+
+fun sumar(variable1, variable2){    retornar variabl1 + variable2;}
+
+//fun sumar(variable1, variable2){    return variabl1 + variable2;}
+
+
+
+Prueba 5:    //NO DEBERIA PASAR
+
+class Perro < Animal { ladrar(){ imprimir "Guauuu";} comer(){mientras(tanque < 100){tanque = tanque + 1; }}}fun crearPerro(){ perro = Perro(); perror.ladrar();}crearPerro();
+
+//class Perro < Animal {   ladrar(){  print "Guauuu";   }  comer(){  while(tanque < 100){ tanque = tanque + 1;  }  }}fun crearPerro(){ perro = Perro();   perror.ladrar(); } crearPerro();
+
+
+
+
+Prueba 6:        //NO DEBERIA PASAR
+
+var nombre = "Hola mundo"   fun presentarse(){      imprimir nombre;  }
+
+//var nombre = "Hola mundo"   fun presentarse(){     print nombre;  }
+
+
+
+
+Prueba 7:   //NO DEBE PASAR
+
+/*
+Código para calcula la serie de Fibonacci
+*/
+var fib = 0;   var lim = 10;    var aux = 1;  para(var init = 1; init <= lim; init = init + 1)    imprimir fib;    aux = aux + fib;    fib = aux - fib;}
+
+
+// var fib = 0;  var lim = 10;  var aux = 1;  for(var init = 1; init <= lim; init = init + 1)    print fib;    aux = aux + fib;    fib = aux - fib;}

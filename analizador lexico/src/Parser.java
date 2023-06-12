@@ -11,17 +11,27 @@ public class Parser {
     
     public Parser(List<Token> tokens){
         this.tokens = tokens;
-        preanalisis = tokens.get(i);
     }
 
     void parse(){
-
+        i = 0;
+        preanalisis = tokens.get(i);
         PROGRAM();
         if(!hayerrores && preanalisis.tipo != TipoToken.EOF){
             System.out.println("Error en la posición " + preanalisis.posicion + ". No se esperaba el token " + preanalisis.tipo);
         }
         else if(!hayerrores && preanalisis.tipo == TipoToken.EOF){
             System.out.println("Lo que ingresaste es válido");
+        }
+        siguienteToken();
+    }
+
+    private void siguienteToken() {
+        i++;
+        if (i < tokens.size()) {
+            preanalisis = tokens.get(i);
+        } else {
+            preanalisis = new Token(TipoToken.EOF, "", -1);
         }
     }
 

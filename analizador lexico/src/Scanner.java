@@ -68,13 +68,78 @@ public class Scanner {
         this.source = source;
     }
 
-    List<Token> scanTokens(){
+    List<Token> scanTokens()
+    {
+       
         //Aquí va el corazón del scanner.
 
         /*
         Analizar el texto de entrada para extraer todos los tokens
         y al final agregar el token de fin de archivo
          */
+        List<Token> tokens = new ArrayList<>();
+         int estado, posicion = 0;
+         StringBuilder lexema = new StringBuilder();
+
+         while(posicion < input.length())
+         {
+            char currentChar = input.charAt(posicion);
+
+            switch(estado)
+            {
+                case 0:
+                    if(Character.isDigit(currentChar))
+                    {
+                        estado = 1;
+                        lexema.append(currentChar);
+                    }
+                    else if(Character.isLetter(currentChar))
+                    {
+                        estado = 2;
+                        lexema.append(currentChar);
+                    }
+                    else if(currentChar == '+')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.SUMA,"+",null, linea));
+                        
+                    }
+                    else if(currentChar == '-')
+                    {
+                        posicion++;
+                        tokens.add(new Token(Token.Type.SUBTRACTION_OPERATOR,"-"));
+                    }
+                    else if(currentChar == '*')
+                    {
+                        posicion++;
+                        tokens.add(new Token(Token.Type.MULTIPLICATION,"*"));
+                    }
+                    else if(currentChar == '/')
+                    {
+                        posicion++;
+                        tokens.add(new Token(Token.Type.DIVISION,"/"));
+                    }
+                    else if(currentChar == '(')
+                    {
+                        posicion++;
+                        tokens.add(new Token(TipoToken.PARENTESIS_DERECHO,"+",null, linea);
+                    }
+                    else if(currentChar == ')')
+                    {
+                        posicion++;
+                        tokens.add(new Token(Token.Type.RIGHT_PARENTHESIS,")"));
+                    }
+
+
+
+            }
+
+        }
+
+
+    }
+
+
         tokens.add(new Token(TipoToken.EOF, "", null, linea));
 
         return tokens;
@@ -109,5 +174,3 @@ Cadena          CADENA
 Numero          NUMERO
 Cada palabra reservada tiene su nombre de token
  */
-
-

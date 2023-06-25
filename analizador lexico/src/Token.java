@@ -19,11 +19,6 @@ public class Token {
         this.posicion = 0;
     }
 
-    public String toString(){
-        return tipo + " " + lexema + " ";
-    }
-
-
     // Métodos auxiliares
     public boolean esOperando(){
         switch (this.tipo){
@@ -37,10 +32,10 @@ public class Token {
 
     public boolean esOperador(){
         switch (this.tipo){
-            case SUMA:
-            case RESTA:
-            case MULTIPLICACION:
-            case DIVISION:
+            case MAS:
+            case GUION_MEDIO:
+            case ASTERISCO:
+            case BARRA_INCLINADA:
             case IGUAL_QUE:
             case MAYOR_QUE:
             case OP_MAYOR_IGUAL_QUE:
@@ -52,10 +47,22 @@ public class Token {
 
     public boolean esPalabraReservada(){
         switch (this.tipo){
-            case VAR:
-            case SI:
-            case IMPRIMIR:
+            case Y:
+            case CLASE:
             case ADEMAS:
+            case FALSO:
+            case PARA:
+            case FUN:
+            case SI:
+            case NULO:
+            case O:
+            case IMPRIMIR:
+            case RETORNAR:
+            case SUPER:
+            case ESTE:
+            case VERDADERO:
+            case VAR:
+             case MIENTRAS:
                 return true;
             default:
                 return false;
@@ -66,6 +73,8 @@ public class Token {
         switch (this.tipo){
             case SI:
             case ADEMAS:
+            case PARA:
+            case MIENTRAS:
                 return true;
             default:
                 return false;
@@ -78,24 +87,18 @@ public class Token {
 
     private int obtenerPrecedencia(){
         switch (this.tipo){
-            case MULTIPLICACION:
+            case ASTERISCO:
+            case BARRA_INCLINADA:
                 return 7;
-            case DIVISION:
-                return 7;
-            case SUMA:
-                return 6;
-            case RESTA:
+            case MAS:
+            case GUION_MEDIO:
                 return 6;
             case MENOR_QUE:
-                return 5;
             case OP_MENOR_IGUAL_QUE:
-                return 5;
             case MAYOR_QUE:
-                return 5;
             case OP_MAYOR_IGUAL_QUE:
                 return 5;
             case OP_IGUAL_QUE:
-                return 4;
             case OP_DIFERENTE:
                 return 4;
             case Y:
@@ -110,10 +113,10 @@ public class Token {
 
     public int aridad(){
         switch (this.tipo) {
-            case MULTIPLICACION:
-            case DIVISION:
-            case SUMA:
-            case RESTA:
+            case ASTERISCO:
+            case BARRA_INCLINADA:
+            case MAS:
+            case GUION_MEDIO:
             case MENOR_QUE:
             case OP_MENOR_IGUAL_QUE:
             case MAYOR_QUE:
@@ -126,5 +129,9 @@ public class Token {
                 return 2;
         }
         return 0;
+    }
+
+    public String toString(){
+        return tipo + " " + lexema + " ";
     }
 }

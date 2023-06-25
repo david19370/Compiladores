@@ -13,10 +13,10 @@ public class Arbol {
             Token t = n.getValue();
             switch (t.tipo){
                 // Operadores aritméticos
-                case SUMA:
-                case RESTA:
-                case MULTIPLICACION:
-                case DIVISION:
+                case MAS:
+                case GUION_MEDIO:
+                case ASTERISCO:
+                case BARRA_INCLINADA:
                     SolverAritmetico solver = new SolverAritmetico(n);
                     Object res = solver.resolver();
                     System.out.println(res);

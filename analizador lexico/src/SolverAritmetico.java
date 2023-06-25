@@ -18,6 +18,8 @@ public class SolverAritmetico {
             }
             else if(n.getValue().tipo == TipoToken.IDENTIFICADOR){
                 // Ver la tabla de símbolos
+                TablaSimbolos tablaSimbolos = new  TablaSimbolos();
+                return tablaSimbolos.obtener(n.getValue().lexema);
             }
         }
 
@@ -51,10 +53,12 @@ public class SolverAritmetico {
         else if(resultadoIzquierdo instanceof String && resultadoDerecho instanceof String){
             if (n.getValue().tipo == TipoToken.SUMA){
                 // Ejecutar la concatenación
+                return ((String)resultadoIzquierdo + (String)resultadoDerecho);
             }
         }
         else{
             // Error por diferencia de tipos
+            System.out.println("Error en los operandos" + resultadoIzquierdo + " y " + resultadoDerecho);
         }
 
         return null;

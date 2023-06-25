@@ -38,6 +38,14 @@ public class SolverAritmetico {
                     return ((Double)resultadoIzquierdo * (Double) resultadoDerecho);
                 case DIVISION:
                     return ((Double)resultadoIzquierdo / (Double) resultadoDerecho);
+                case MENOR_QUE:
+                    return ((Double)resultadoIzquierdo < (Double) resultadoDerecho);
+                case OP_MENOR_IGUAL_QUE:
+                    return ((Double)resultadoIzquierdo <= (Double) resultadoDerecho);
+                case MAYOR_QUE:
+                    return ((Double)resultadoIzquierdo > (Double) resultadoDerecho);
+                case OP_MAYOR_IGUAL_QUE:
+                    return ((Double)resultadoIzquierdo >= (Double) resultadoDerecho);
             }
         }
         else if(resultadoIzquierdo instanceof String && resultadoDerecho instanceof String){

@@ -105,7 +105,6 @@ public class Token {
             case IGUAL_QUE:
                 return 1;
         }
-
         return 0;
     }
 

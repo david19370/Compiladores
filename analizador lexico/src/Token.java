@@ -19,6 +19,10 @@ public class Token {
         this.posicion = 0;
     }
 
+    public String toString(){
+        return tipo + " " + lexema + " ";
+    }
+
     // Métodos auxiliares
     public boolean esOperando(){
         switch (this.tipo){
@@ -129,9 +133,5 @@ public class Token {
                 return 2;
         }
         return 0;
-    }
-
-    public String toString(){
-        return tipo + " " + lexema + " ";
     }
 }

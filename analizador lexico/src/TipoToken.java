@@ -17,3 +17,4 @@ public enum TipoToken {
     // Final de cadena
     EOF
 }
+

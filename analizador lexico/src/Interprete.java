@@ -21,7 +21,6 @@ public class Interprete {
         } else{
             ejecutarPrompt();
         }
-        ejecutarPrompt();
     }
 
     private static void ejecutarArchivo(String path) throws IOException {
@@ -49,21 +48,14 @@ public class Interprete {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
-        /*for(Token token : tokens){
-            System.out.println(token);
-        }*/
-
-        // Para este ejemplo no vamos a utilizar un parser
-        /*Parser parser = new Parser(tokens);
-        parser.parse();*/
-
         GeneradorPostfija gpf = new GeneradorPostfija(tokens);
         List<Token> postfija = gpf.convertir();
-
-        for(Token token : postfija){
+        
+        for(Token token : tokens){
             System.out.println(token);
         }
-        Parser parser = new Parser(postfija);
+
+        Parser parser = new Parser(tokens);
         parser.parse();
 
         GeneradorAST gast = new GeneradorAST(postfija);

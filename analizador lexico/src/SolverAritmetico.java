@@ -32,13 +32,13 @@ public class SolverAritmetico {
 
         if(resultadoIzquierdo instanceof Double && resultadoDerecho instanceof Double){
             switch (n.getValue().tipo){
-                case SUMA:
+                case MAS:
                     return ((Double)resultadoIzquierdo + (Double) resultadoDerecho);
-                case RESTA:
+                case GUION_MEDIO:
                     return ((Double)resultadoIzquierdo - (Double) resultadoDerecho);
-                case MULTIPLICACION:
+                case ASTERISCO:
                     return ((Double)resultadoIzquierdo * (Double) resultadoDerecho);
-                case DIVISION:
+                case BARRA_INCLINADA:
                     return ((Double)resultadoIzquierdo / (Double) resultadoDerecho);
                 case MENOR_QUE:
                     return ((Double)resultadoIzquierdo < (Double) resultadoDerecho);
@@ -51,7 +51,7 @@ public class SolverAritmetico {
             }
         }
         else if(resultadoIzquierdo instanceof String && resultadoDerecho instanceof String){
-            if (n.getValue().tipo == TipoToken.SUMA){
+            if (n.getValue().tipo == TipoToken.MAS){
                 // Ejecutar la concatenación
                 return ((String)resultadoIzquierdo + (String)resultadoDerecho);
             }

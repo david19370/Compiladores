@@ -25,7 +25,17 @@ public class Arbol {
                 case VAR:
                     // Crear una variable. Usar tabla de simbolos
                     break;
+                case IMPRIMIR:
+                    // Imprimir
+                    break;
+                case MIENTRAS:
+                    // Mientras
+                    break;
+                case PARA:
+                    // Para
+                    break;
                 case SI:
+                    //Si
                     break;
 
             }

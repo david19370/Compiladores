@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Scanner 
 {
-
+    int posicion = 0;
     private String source;
 
     private int linea = 1;
@@ -34,8 +34,8 @@ public class Scanner
     private static final Map<String, TipoToken> signosLenguaje;
     static {
         signosLenguaje = new HashMap<>();
-        signosLenguaje.put("(", TipoToken.PARENTESIS_DERECHO);
-        signosLenguaje.put(")", TipoToken.PARENTESIS_IZQUIERDO);
+        signosLenguaje.put("(", TipoToken.PARENTESIS_IZQUIERDO);
+        signosLenguaje.put(")", TipoToken.PARENTESIS_DERECHO);
         signosLenguaje.put("{", TipoToken.LLAVE_DERECHA);
         signosLenguaje.put("}", TipoToken.LLAVE_IZQUIERDA);
         signosLenguaje.put(",", TipoToken.COMA);
@@ -71,7 +71,6 @@ public class Scanner
     {
         List<Token> tokens = new ArrayList<>();
         int estado = 0;
-        int posicion = 0;
         String lexema = "";
         source = source + " ";
 
@@ -104,12 +103,12 @@ public class Scanner
                     }
                     else if(currentChar == '(') //Signo del lenguaje (
                     {
-                        tokens.add(new Token(TipoToken.PARENTESIS_DERECHO,"(",null, linea));
+                        tokens.add(new Token(TipoToken.PARENTESIS_IZQUIERDO,"(",null, linea));
                         posicion++;
                     }
                     else if(currentChar == ')') //Signo del lenguaje )
                     {
-                        tokens.add(new Token(TipoToken.PARENTESIS_IZQUIERDO,")",null, linea));
+                        tokens.add(new Token(TipoToken.PARENTESIS_DERECHO,")",null, linea));
                         posicion++;
                     }
                     else if(currentChar == '{') //Signo del lenguaje {
@@ -184,9 +183,7 @@ public class Scanner
 
                     else if(currentChar == '"')
                     {
-                        lexema = lexema + currentChar;
-                        posicion++;
-                        estado = 6;
+                        estado=6;
                     }
                     
                     else if(Character.isAlphabetic(currentChar))
@@ -275,7 +272,7 @@ public class Scanner
                         posicion++;
                         estado=5;
                     }else{
-                        tokens.add(new Token(TipoToken.NUMERO,lexema,null, linea));
+                        tokens.add(new Token(TipoToken.NUMERO,lexema,Double.valueOf(lexema), linea));
                         lexema = "";
                         estado=0;
                     }
@@ -283,15 +280,17 @@ public class Scanner
 
                 case 6: //Cadenas " "
                     if(currentChar == '"'){
-                        lexema = lexema + currentChar;
-                        tokens.add(new Token(TipoToken.CADENA,lexema,null, linea));
+                        int inicio = posicion+1;
                         posicion++;
-                        lexema = "";
+
+                        while(posicion < source.length() && source.charAt(posicion) != '"'){
+                            posicion++;
+                        }
+
+                        String cadena = source.substring(inicio, posicion);
+                        posicion++;
+                        tokens.add(new Token(TipoToken.CADENA,cadena,cadena, linea));
                         estado = 0;
-                    }else{
-                        lexema = lexema + currentChar;
-                        posicion++;
-                        estado = 6;
                     }
                     break; //Case 6
                     
@@ -345,12 +344,12 @@ public class Scanner
                     }else{ 
                         TipoToken tipoToken = palabrasReservadas.get(lexema);
                         if(tipoToken == null){
-                            tokens.add(new Token(TipoToken.IDENTIFICADOR, lexema, null,linea));
+                            tokens.add(new Token(TipoToken.IDENTIFICADOR, lexema, lexema,linea));
                             lexema = "";
                             estado = 0;
                         }
                         else{
-                            tokens.add(new Token(tipoToken, lexema, null, linea));
+                            tokens.add(new Token(tipoToken, lexema, lexema, linea));
                             lexema = "";
                             estado = 0;
                         }
@@ -367,7 +366,6 @@ public class Scanner
     }
 
 
-        
 }
 
 

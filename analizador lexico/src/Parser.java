@@ -3,7 +3,7 @@ import java.util.List;
 public class Parser {
 
     private final List<Token> tokens;
-    
+    boolean valido = true;
     private int i=0;
     
     private Boolean hayerrores = false;
@@ -58,7 +58,7 @@ public class Parser {
         else if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.PARA 
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.PARA 
         || preanalisis.tipo == TipoToken.SI  || preanalisis.tipo == TipoToken.IMPRIMIR || preanalisis.tipo == TipoToken.RETORNAR
         || preanalisis.tipo == TipoToken.MIENTRAS || preanalisis.tipo == TipoToken.LLAVE_DERECHA  || preanalisis.tipo == TipoToken.MAS){
             STATEMENT();
@@ -136,7 +136,7 @@ public class Parser {
         if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.MAS){
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.MAS){
             EXPR_STMT();
         }
         else if(preanalisis.tipo == TipoToken.PARA){
@@ -169,7 +169,7 @@ public class Parser {
         if (preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE 
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA  || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO  || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.MAS)
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO  || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.MAS)
         {
             EXPRESSION();
             coincidir(TipoToken.PUNTO_COMA);
@@ -185,11 +185,11 @@ public class Parser {
         if (TipoToken.PARA == preanalisis.tipo)
         {
             coincidir(TipoToken.PARA);
-            coincidir(TipoToken.PARENTESIS_DERECHO);
+            coincidir(TipoToken.PARENTESIS_IZQUIERDO);
             FOR_STMT_1();
             FOR_STMT_2();
             FOR_STMT_3();
-            coincidir(TipoToken.PARENTESIS_IZQUIERDO);
+            coincidir(TipoToken.PARENTESIS_DERECHO);
             STATEMENT();
         }
         else{
@@ -207,7 +207,7 @@ public class Parser {
         else if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA  || preanalisis.tipo == TipoToken.IDENTIFICADOR
-         || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO  || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.COMA){
+         || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO  || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.COMA){
             EXPR_STMT();
         }
         else if(preanalisis.tipo == TipoToken.PUNTO_COMA)
@@ -225,7 +225,7 @@ public class Parser {
         if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE 
          || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA   || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-         || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO  || preanalisis.tipo == TipoToken.SUPER) 
+         || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO  || preanalisis.tipo == TipoToken.SUPER) 
         {
             EXPRESSION();
             coincidir(TipoToken.PUNTO_COMA);
@@ -255,9 +255,9 @@ public class Parser {
         if(TipoToken.SI == preanalisis.tipo)
         {
             coincidir(TipoToken.SI);
-            coincidir(TipoToken.PARENTESIS_DERECHO);
-            EXPRESSION();
             coincidir(TipoToken.PARENTESIS_IZQUIERDO);
+            EXPRESSION();
+            coincidir(TipoToken.PARENTESIS_DERECHO);
             STATEMENT();
             ELSE_STATEMENT();
         }
@@ -308,7 +308,7 @@ public class Parser {
         if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO   || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO  || preanalisis.tipo == TipoToken.SUPER){
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO  || preanalisis.tipo == TipoToken.SUPER){
             EXPRESSION();
         }
     }
@@ -318,9 +318,9 @@ public class Parser {
         if(TipoToken.MIENTRAS == preanalisis.tipo)
         {
             coincidir(TipoToken.MIENTRAS);
-            coincidir (TipoToken.PARENTESIS_DERECHO);
+            coincidir (TipoToken.PARENTESIS_IZQUIERDO);
             EXPRESSION ();
-            coincidir(TipoToken.PARENTESIS_IZQUIERDO);
+            coincidir(TipoToken.PARENTESIS_DERECHO);
             STATEMENT();            
         }
         else{
@@ -349,7 +349,7 @@ public class Parser {
         || preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO  || preanalisis.tipo == TipoToken.SUPER  || preanalisis.tipo == TipoToken.PARA 
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO  || preanalisis.tipo == TipoToken.SUPER  || preanalisis.tipo == TipoToken.PARA 
         || preanalisis.tipo == TipoToken.SI  || preanalisis.tipo == TipoToken.IMPRIMIR  || preanalisis.tipo == TipoToken.RETORNAR 
         || preanalisis.tipo == TipoToken.MIENTRAS  || preanalisis.tipo == TipoToken.LLAVE_DERECHA   || preanalisis.tipo == TipoToken.MAS){
             DECLARATION();
@@ -412,7 +412,7 @@ public class Parser {
         if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO  || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE 
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA  || preanalisis.tipo == TipoToken.IDENTIFICADOR
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO   || preanalisis.tipo == TipoToken.SUPER){
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO   || preanalisis.tipo == TipoToken.SUPER){
             COMPARISON();
             EQUALITY_2();
         }
@@ -439,7 +439,7 @@ public class Parser {
         if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO  || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE  
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO   || preanalisis.tipo == TipoToken.SUPER){
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO   || preanalisis.tipo == TipoToken.SUPER){
             TERM();
             COMPARISON_2();
         }
@@ -477,7 +477,7 @@ public class Parser {
         if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO   || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE 
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA  || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO        || preanalisis.tipo == TipoToken.SUPER){    
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO        || preanalisis.tipo == TipoToken.SUPER){    
             FACTOR();
             TERM_2();
         }
@@ -509,7 +509,7 @@ public class Parser {
         if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO  || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE 
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO   || preanalisis.tipo == TipoToken.SUPER){
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO   || preanalisis.tipo == TipoToken.SUPER){
             UNARY();
             FACTOR_2();
         }
@@ -549,7 +549,7 @@ public class Parser {
         }
         else if(preanalisis.tipo == TipoToken.VERDADERO || preanalisis.tipo == TipoToken.FALSO || preanalisis.tipo == TipoToken.NULO 
         || preanalisis.tipo == TipoToken.ESTE  || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA
-        || preanalisis.tipo == TipoToken.IDENTIFICADOR || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO
+        || preanalisis.tipo == TipoToken.IDENTIFICADOR || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO
         || preanalisis.tipo == TipoToken.SUPER)
         {
             CALL();
@@ -564,7 +564,7 @@ public class Parser {
         if(hayerrores) return;
         if(preanalisis.tipo == TipoToken.VERDADERO || preanalisis.tipo == TipoToken.FALSO || preanalisis.tipo == TipoToken.NULO 
         || preanalisis.tipo == TipoToken.ESTE  || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA
-        || preanalisis.tipo == TipoToken.IDENTIFICADOR || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO || preanalisis.tipo == TipoToken.SUPER){
+        || preanalisis.tipo == TipoToken.IDENTIFICADOR || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO || preanalisis.tipo == TipoToken.SUPER){
             PRIMARY ();
             CALL_2();
         }
@@ -576,11 +576,11 @@ public class Parser {
 
     void CALL_2() {    //(ARGUMENTS_OPC) CALL_2 | .id CALL_2 | EOF
         if(hayerrores) return;
-        if(preanalisis.tipo == TipoToken.PARENTESIS_DERECHO)
+        if(preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO)
         {
-            coincidir(TipoToken.PARENTESIS_DERECHO);
-            ARGUMENTS_OPC();
             coincidir(TipoToken.PARENTESIS_IZQUIERDO);
+            ARGUMENTS_OPC();
+            coincidir(TipoToken.PARENTESIS_DERECHO);
             CALL_2();
         }
         else if(preanalisis.tipo == TipoToken.PUNTO)
@@ -595,7 +595,7 @@ public class Parser {
         if(hayerrores) return;
         if(preanalisis.tipo == TipoToken.VERDADERO || preanalisis.tipo == TipoToken.FALSO || preanalisis.tipo == TipoToken.NULO 
         || preanalisis.tipo == TipoToken.ESTE  || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA
-        || preanalisis.tipo == TipoToken.IDENTIFICADOR || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO || preanalisis.tipo == TipoToken.SUPER)
+        || preanalisis.tipo == TipoToken.IDENTIFICADOR || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO || preanalisis.tipo == TipoToken.SUPER)
         {
             CALL();
             coincidir(TipoToken.PUNTO);
@@ -632,11 +632,11 @@ public class Parser {
         {
             coincidir(TipoToken.IDENTIFICADOR);
         }
-        else if(preanalisis.tipo == TipoToken.PARENTESIS_DERECHO)
+        else if(preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO)
         {
-            coincidir(TipoToken.PARENTESIS_DERECHO);
-            EXPRESSION();
             coincidir(TipoToken.PARENTESIS_IZQUIERDO);
+            EXPRESSION();
+            coincidir(TipoToken.PARENTESIS_DERECHO);
         }
         else if(preanalisis.tipo == TipoToken.SUPER)
         {
@@ -657,9 +657,9 @@ public class Parser {
         if(TipoToken.IDENTIFICADOR == preanalisis.tipo)
         {
             coincidir(TipoToken.IDENTIFICADOR);
-            coincidir(TipoToken.PARENTESIS_DERECHO);
-            PARAMETERS_OPC();
             coincidir(TipoToken.PARENTESIS_IZQUIERDO);
+            PARAMETERS_OPC();
+            coincidir(TipoToken.PARENTESIS_DERECHO);
             BLOCK();
         }
         else{
@@ -713,7 +713,7 @@ public class Parser {
         if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO|| preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO  || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA  || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO || preanalisis.tipo == TipoToken.SUPER){
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO || preanalisis.tipo == TipoToken.SUPER){
             ARGUMENTS();
         }    
     }
@@ -723,7 +723,7 @@ public class Parser {
         if(preanalisis.tipo == TipoToken.ADMIRACION || preanalisis.tipo == TipoToken.GUION_MEDIO || preanalisis.tipo == TipoToken.VERDADERO 
         || preanalisis.tipo == TipoToken.FALSO   || preanalisis.tipo == TipoToken.NULO || preanalisis.tipo == TipoToken.ESTE 
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA  || preanalisis.tipo == TipoToken.IDENTIFICADOR 
-        || preanalisis.tipo == TipoToken.PARENTESIS_DERECHO  || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.MAS){
+        || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO  || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.MAS){
             EXPRESSION();
             ARGUMENTS_2();
         }
@@ -751,6 +751,7 @@ public class Parser {
             preanalisis = tokens.get(i);
         }
         else{
+            valido = false;
             hayerrores = true;
             System.out.println("Error en la posición " + preanalisis.posicion + ". Se esperaba un  " + t);
         }

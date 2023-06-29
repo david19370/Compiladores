@@ -13,7 +13,7 @@ public class GeneradorPostfija {
         this.pila = new Stack<>();
         this.postfija = new ArrayList<>();
     }
-
+    
     public List<Token> convertir(){
         boolean estructuraDeControl = false;
         Stack<Token> pilaEstructurasDeControl = new Stack<>();
@@ -39,19 +39,19 @@ public class GeneradorPostfija {
             else if(t.esOperando()){
                 postfija.add(t);
             }
-            else if(t.tipo == TipoToken.PARENTESIS_DERECHO){
+            else if(t.tipo == TipoToken.PARENTESIS_IZQUIERDO){
                 pila.push(t);
             }
-            else if(t.tipo == TipoToken.PARENTESIS_IZQUIERDO){
-                while(!pila.isEmpty() && pila.peek().tipo != TipoToken.PARENTESIS_DERECHO){
+            else if(t.tipo == TipoToken.PARENTESIS_DERECHO){
+                while(!pila.isEmpty() && pila.peek().tipo != TipoToken.PARENTESIS_IZQUIERDO){
                     Token temp = pila.pop();
                     postfija.add(temp);
                 }
-                if(pila.peek().tipo == TipoToken.PARENTESIS_DERECHO){
+                if(pila.peek().tipo == TipoToken.PARENTESIS_IZQUIERDO){
                     pila.pop();
                 }
-                if(estructuraDeControl){
-                    postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null));
+                if(estructuraDeControl&&infija.get(i+1).tipo==TipoToken.LLAVE_IZQUIERDA){
+                    postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null,0));
                 }
             }
             else if(t.esOperador()){
@@ -62,19 +62,19 @@ public class GeneradorPostfija {
                 pila.push(t);
             }
             else if(t.tipo == TipoToken.PUNTO_COMA){
-                while(!pila.isEmpty() && pila.peek().tipo != TipoToken.LLAVE_DERECHA){
+                while(!pila.isEmpty() && pila.peek().tipo != TipoToken.LLAVE_IZQUIERDA){
                     Token temp = pila.pop();
                     postfija.add(temp);
                 }
                 postfija.add(t);
             }
-            else if(t.tipo == TipoToken.LLAVE_DERECHA){
+            else if(t.tipo == TipoToken.LLAVE_IZQUIERDA){
                 // Se mete a la pila, tal como el parentesis. Este paso
                 // pudiera omitirse, sólo hay que tener cuidado en el manejo
                 // del "}".
                 pila.push(t);
             }
-            else if(t.tipo == TipoToken.LLAVE_IZQUIERDA && estructuraDeControl){
+            else if(t.tipo == TipoToken.LLAVE_DERECHA && estructuraDeControl){
 
                 // Primero verificar si hay un else:
                 if(infija.get(i + 1).tipo == TipoToken.ADEMAS){
@@ -87,29 +87,28 @@ public class GeneradorPostfija {
                     // El cual servirá para indicar que se finaliza la estructura
                     // de control.
                     pila.pop();
-                    postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null));
+                    postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null,0));
+                    Token auxiliar = pilaEstructurasDeControl.pop();
 
                     // Se extrae de la pila de estrucuras de control, el elemento en el tope
-                    pilaEstructurasDeControl.pop();
+                    if(auxiliar.tipo == TipoToken.ADEMAS){
+                        pilaEstructurasDeControl.pop();
+                        postfija.add(new Token(TipoToken.PUNTO_COMA,";",null,0));
+                    }
                     if(pilaEstructurasDeControl.isEmpty()){
                         estructuraDeControl = false;
                     }
                 }
-
-
             }
         }
         while(!pila.isEmpty()){
             Token temp = pila.pop();
             postfija.add(temp);
         }
-
         while(!pilaEstructurasDeControl.isEmpty()){
             pilaEstructurasDeControl.pop();
-            postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null));
+            postfija.add(new Token(TipoToken.PUNTO_COMA, ";", null,0));
         }
-
         return postfija;
     }
-
 }

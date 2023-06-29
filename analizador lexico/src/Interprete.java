@@ -9,7 +9,8 @@ import java.util.List;
 public class Interprete {
 
     static boolean existenErrores = false;
-
+    static TablaSimbolos tablaSimbolos = new TablaSimbolos();
+    
     public static void main(String[] args) throws IOException {
         if(args.length > 1) {
             System.out.println("Uso correcto: interprete [script]");
@@ -48,19 +49,26 @@ public class Interprete {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
-        GeneradorPostfija gpf = new GeneradorPostfija(tokens);
-        List<Token> postfija = gpf.convertir();
-        
-        for(Token token : tokens){
-            System.out.println(token);
-        }
-
+        try{
         Parser parser = new Parser(tokens);
         parser.parse();
 
-        GeneradorAST gast = new GeneradorAST(postfija);
-        Arbol programa = gast.generarAST();
-        //programa.recorrer();
+        if(parser.valido){
+
+            GeneradorPostfija gpf = new GeneradorPostfija(tokens);
+            List<Token> postfija = gpf.convertir();
+
+            /*for(Token token : tokens){
+            System.out.println(token);
+            }*/
+
+            GeneradorAST gast = new GeneradorAST(postfija);
+            Arbol programa = gast.generarAST();
+            programa.recorrer(tablaSimbolos);
+        }
+        }catch(RuntimeException e){
+            System.out.println(e.getMessage() );
+        }
     }
 
     /*

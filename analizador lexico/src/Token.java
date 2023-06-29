@@ -28,6 +28,7 @@ public class Token {
         switch (this.tipo){
             case IDENTIFICADOR:
             case NUMERO:
+            case CADENA:
                 return true;
             default:
                 return false;
@@ -41,8 +42,14 @@ public class Token {
             case ASTERISCO:
             case BARRA_INCLINADA:
             case IGUAL_QUE:
+            case MENOR_QUE:
+            case OP_MENOR_IGUAL_QUE:
             case MAYOR_QUE:
             case OP_MAYOR_IGUAL_QUE:
+            case OP_IGUAL_QUE:
+            case OP_DIFERENTE:
+            case Y:
+            case O:
                 return true;
             default:
                 return false;
@@ -51,22 +58,18 @@ public class Token {
 
     public boolean esPalabraReservada(){
         switch (this.tipo){
-            case Y:
-            case CLASE:
-            case ADEMAS:
-            case FALSO:
             case PARA:
-            case FUN:
             case SI:
-            case NULO:
-            case O:
             case IMPRIMIR:
-            case RETORNAR:
-            case SUPER:
-            case ESTE:
-            case VERDADERO:
+            case ADEMAS:
             case VAR:
-             case MIENTRAS:
+            case MIENTRAS:
+            case VERDADERO:
+            case FALSO:
+            case RETORNAR:
+            case NULO:
+            case ESTE:
+            case SUPER:
                 return true;
             default:
                 return false;

@@ -36,8 +36,8 @@ public class Scanner
         signosLenguaje = new HashMap<>();
         signosLenguaje.put("(", TipoToken.PARENTESIS_IZQUIERDO);
         signosLenguaje.put(")", TipoToken.PARENTESIS_DERECHO);
-        signosLenguaje.put("{", TipoToken.LLAVE_DERECHA);
-        signosLenguaje.put("}", TipoToken.LLAVE_IZQUIERDA);
+        signosLenguaje.put("{", TipoToken.LLAVE_IZQUIERDA);
+        signosLenguaje.put("}", TipoToken.LLAVE_DERECHA);
         signosLenguaje.put(",", TipoToken.COMA);
         signosLenguaje.put(".", TipoToken.PUNTO);
         signosLenguaje.put(";", TipoToken.PUNTO_COMA);
@@ -113,12 +113,12 @@ public class Scanner
                     }
                     else if(currentChar == '{') //Signo del lenguaje {
                     {
-                        tokens.add(new Token(TipoToken.LLAVE_DERECHA,"{",null, linea));
+                        tokens.add(new Token(TipoToken.LLAVE_IZQUIERDA,"{",null, linea));
                         posicion++;
                     }
                     else if(currentChar == '}') //Signo del lenguaje }
                     {
-                        tokens.add(new Token(TipoToken.LLAVE_IZQUIERDA,"}",null, linea));
+                        tokens.add(new Token(TipoToken.LLAVE_DERECHA,"}",null, linea));
                         posicion++;
                     }
                     else if(currentChar == ',') //Signo del lenguaje ,
@@ -192,7 +192,7 @@ public class Scanner
                         posicion++;
                         estado = 11;
                     }
-                    else if(currentChar == '\r' || currentChar == '\n')
+                    else if(currentChar == '\r' || currentChar == '\n' || currentChar == '\t' || currentChar == ' ')
                     {
                         posicion++;
                     }

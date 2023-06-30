@@ -60,7 +60,7 @@ public class Parser {
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA || preanalisis.tipo == TipoToken.IDENTIFICADOR 
         || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO || preanalisis.tipo == TipoToken.SUPER || preanalisis.tipo == TipoToken.PARA 
         || preanalisis.tipo == TipoToken.SI  || preanalisis.tipo == TipoToken.IMPRIMIR || preanalisis.tipo == TipoToken.RETORNAR
-        || preanalisis.tipo == TipoToken.MIENTRAS || preanalisis.tipo == TipoToken.LLAVE_DERECHA  || preanalisis.tipo == TipoToken.MAS){
+        || preanalisis.tipo == TipoToken.MIENTRAS || preanalisis.tipo == TipoToken.LLAVE_IZQUIERDA  || preanalisis.tipo == TipoToken.MAS){
             STATEMENT();
             DECLARATION();
         }
@@ -73,9 +73,9 @@ public class Parser {
             coincidir(TipoToken.CLASE);
             coincidir(TipoToken.IDENTIFICADOR);
             CLASS_INHER();
-            coincidir(TipoToken.LLAVE_DERECHA);
+            coincidir(TipoToken.LLAVE_IZQUIERDA);
             FUNCTIONS();
-            coincidir(TipoToken.LLAVE_IZQUIERDA);    
+            coincidir(TipoToken.LLAVE_DERECHA);    
         }
         else{
             hayerrores = true;
@@ -155,7 +155,7 @@ public class Parser {
         {
             WHILE_STMT();
         }
-        else if(preanalisis.tipo == TipoToken.LLAVE_DERECHA){
+        else if(preanalisis.tipo == TipoToken.LLAVE_IZQUIERDA){
             BLOCK();
         }
         else{
@@ -331,11 +331,11 @@ public class Parser {
 
     void BLOCK(){        // { BLOCK_DECL }  
         if(hayerrores) return;
-        if(TipoToken.LLAVE_DERECHA == preanalisis.tipo)
+        if(TipoToken.LLAVE_IZQUIERDA == preanalisis.tipo)
         {
-            coincidir(TipoToken.LLAVE_DERECHA);
+            coincidir(TipoToken.LLAVE_IZQUIERDA);
             BLOCK_DECL();
-            coincidir(TipoToken.LLAVE_IZQUIERDA);            
+            coincidir(TipoToken.LLAVE_DERECHA);            
         }
         else{
             hayerrores=true;
@@ -351,7 +351,7 @@ public class Parser {
         || preanalisis.tipo == TipoToken.NUMERO || preanalisis.tipo == TipoToken.CADENA || preanalisis.tipo == TipoToken.IDENTIFICADOR 
         || preanalisis.tipo == TipoToken.PARENTESIS_IZQUIERDO  || preanalisis.tipo == TipoToken.SUPER  || preanalisis.tipo == TipoToken.PARA 
         || preanalisis.tipo == TipoToken.SI  || preanalisis.tipo == TipoToken.IMPRIMIR  || preanalisis.tipo == TipoToken.RETORNAR 
-        || preanalisis.tipo == TipoToken.MIENTRAS  || preanalisis.tipo == TipoToken.LLAVE_DERECHA   || preanalisis.tipo == TipoToken.MAS){
+        || preanalisis.tipo == TipoToken.MIENTRAS  || preanalisis.tipo == TipoToken.LLAVE_IZQUIERDA   || preanalisis.tipo == TipoToken.MAS){
             DECLARATION();
             BLOCK_DECL();
         }

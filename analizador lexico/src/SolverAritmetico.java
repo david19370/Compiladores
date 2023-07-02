@@ -74,7 +74,7 @@ public class SolverAritmetico {
     }
         else{
             // Error por diferencia de tipos
-            System.out.println("Error en los operandos " + resultadoIzquierdo + " y " + resultadoDerecho);
+            System.out.println("Error por diferencia de tipos en los operandos " + resultadoIzquierdo + " y " + resultadoDerecho);
         }
 
         return null;
